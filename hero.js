@@ -5,7 +5,7 @@ const loadCategory= async()=>{
     const res=await fetch('https://openapi.programming-hero.com/api/videos/categories');
     const data = await res.json();
     const categories=data.data;
-    // console.log(categories);
+   
     displayCategory(categories);
 }
 
@@ -19,6 +19,7 @@ const displayCategory=(categories)=>{
         <button class="btn" onclick="filterCard(${category.category_id})">${category.category}</button>
        `;
        categoryContainer.appendChild(categoryButton);
+     
     });
 }
 
@@ -29,7 +30,7 @@ const loadCard=async(id=1001)=>{
     const res=await fetch(`https://openapi.programming-hero.com/api/videos/category/${id}`);
     const data= await res.json();
     const cards=data.data;
-   
+  
     displayCard(cards);
 }
 
@@ -39,17 +40,20 @@ const displayCard=(cards)=>{
     cardContainer.innerHTML=``;
     cards.forEach(card=>{
         console.log(card);
+        const second=card.others[1]
+        const xtime=convertTime(second);
         const isVerified=card.authors[0].verified;
         const cardBody=document.createElement('div');
         cardBody.innerHTML=`
         <div class="card w-72 h-80 bg-base-100 shadow-xl">
         <figure><img src="${card.thumbnail}" alt="" class="h-52" /></figure>
-        <div class="card-body flex flex-row">
+        <div class="text-white w-32 mt-[-35px] ml-[150px] text-right bg-black rounded-md">${xtime}</div>
+        <div class="card-body flex flex-row lg:w-80 md:w-64">
             
         <div class="">
-        <img  class="w-[40px] h-[40px] rounded-full" src="${card.authors[0].profile_picture}">
+        <img  class="w-10 h-10 rounded-full" src="${card.authors[0].profile_picture}">
         </div>
-            <div>
+            <div class="">
             <h2 class="text-xl">
             ${card.title}
             </h2>
@@ -60,7 +64,7 @@ const displayCard=(cards)=>{
             <img src="./icon/check.png">
             </div>
             </div>
-            <h2 class="text-gray-400">${card.others.views} Views</h2>
+            <h2 class="text-gray-400">${card.others?.views} Views</h2>
 
             </div>
             </div>
@@ -79,8 +83,12 @@ const displayCard=(cards)=>{
 }
 
 
+
+function convertTime(second){
+    return '3hrs 56min Ago';
+}
+
 const filterCard=(id)=>{
-    console.log(id);
    loadCard(id);
   
 }
@@ -89,3 +97,4 @@ const filterCard=(id)=>{
 
 
 loadCategory();
+loadCard(1000)

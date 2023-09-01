@@ -16,21 +16,25 @@
             <img src="./icon/Logo.png" />
         </button>
         <div class="flex-1 flex lg:justify-center">
-            <button class="btn bg-[rgba(37, 37, 37, 0.2)] text-black">Sort By View</button>
+            <button id="sortByView" onclick="sortByView()" class="btn bg-[rgba(37, 37, 37, 0.2)] text-black">Sort By View</button>
         </div>
 
         <div class="flex-1 flex lg:justify-end">
-            <button class="btn bg-[#FF1F3D] text-white">Blog</button>
+            <button onclick="location.href='./blog.html'" class="btn bg-[#FF1F3D] text-white">Blog</button>
         </div>
 
 
     </header>
     <hr class="lg:mt-10 mt-4">
-    <section>
+    <section id="full-body">
         <div id="cat-container" class="mt-5 flex justify-center lg:gap-5 gap-1">
         </div>
 
-        <div id="card-container" class="md:grid lg:grid lg:grid-cols-4 md:grid-cols-2 flex justify-center flex-col gap-5 mt-10 items-center">
+        <div id="card-container" class="md:grid lg:grid lg:grid-cols-3 xl:grid-cols-4 md:grid-cols-2 flex justify-center flex-col gap-5 md:gap-2 mt-10 items-center">
+
+        </div>
+
+        <div id="loaded-id" class="hidden">
 
         </div>
 
@@ -42,6 +46,8 @@
 </body>
 
 </html>
+
+
 
 
 

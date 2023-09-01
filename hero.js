@@ -78,8 +78,8 @@ const displayCard = (cards, isSorted) => {
             const isVerified = card.authors[0].verified;
             const cardBody = document.createElement('div');
             cardBody.innerHTML = `
-        <div class="card w-72 h-80 bg-base-100 shadow-xl">
-        <figure><img src="${card.thumbnail}" alt="" class="h-52 rounded-b-md" /></figure>
+        <div   class="card w-72 md:w-auto  h-80 bg-base-100 shadow-xl">
+        <figure><img src="${card.thumbnail}" alt="" class="h-52 w-72  rounded-b-md" /></figure>
         <div id="${'time' + card.authors[0].profile_name}" class="text-white w-32 mt-[-35px] ml-[150px] text-right bg-black rounded-md hidden">${xtime}</div>
         <div class="card-body flex flex-row lg:w-80 md:w-64">
             

@@ -1,6 +1,4 @@
 
-// Category Buttons Load and Display
-
 const loadCategory= async()=>{
     const res=await fetch('https://openapi.programming-hero.com/api/videos/categories');
     const data = await res.json();
@@ -26,20 +24,40 @@ const displayCategory=(categories)=>{
 
 // Load card
 
-const loadCard=async(id=1001)=>{
+const loadCard=async(id=1001,isSorted)=>{
     const res=await fetch(`https://openapi.programming-hero.com/api/videos/category/${id}`);
     const data= await res.json();
     const cards=data.data;
     const loadedcard=document.getElementById('loaded-id');
     loadedcard.innerHTML=id
-    displayCard(cards);
+    displayCard(cards,isSorted);
     
 }
 
 
-const displayCard=(cards)=>{
+const displayCard=(cards,isSorted)=>{
     const cardContainer=document.getElementById('card-container');
     cardContainer.innerHTML=``;
+
+    if (isSorted){
+        console.log('hh')
+        cards.sort((a, b) => {
+            let fa = a.others.views,
+                fb = b.others.views;
+               
+                let aa=parseFloat(fa.substring(-1,fa.length-1)),
+                    bb=parseFloat(fb.substring(-1,fb.length-1));
+                    console.log(aa,bb)
+            if (aa < bb) {
+                return 1;
+            }
+            if (aa > bb) {
+                return -1;
+            }
+            return 0;
+        });
+    }
+
     if (cards.length<1){
         const notfound=document.createElement('div');
         notfound.innerHTML=`
@@ -55,7 +73,7 @@ const displayCard=(cards)=>{
 
     }else{
     cards.forEach(card=>{
-        console.log(card)
+        // console.log(card)
         // card.sort()
         const second=card.others?.posted_date
         const xtime=time(second);
@@ -97,7 +115,7 @@ const displayCard=(cards)=>{
          }
 
          if (second>0){
-            console.log('here')
+            // console.log('here')
             const timedata=document.getElementById(`${'time'+card.authors[0].profile_name}`)
             timedata.classList.remove('hidden')
          }
@@ -112,7 +130,7 @@ const displayCard=(cards)=>{
 
 const time=(second)=>{
     const xsec=second%60;
-    console.log(second);
+    // console.log(second);
      const totalmin=(second-xsec)/60;
      const min=totalmin%60;
      const totalhour=(totalmin-min)/60;
@@ -120,17 +138,12 @@ const time=(second)=>{
      const day=(totalhour-hour)/24;
      const newday=day%365;
      const year=(day-newday)/365;
-
-
-
      if (totalhour<24){
      return `${totalhour} hrs ${min} min ago`;
      }else if(day<365){
         return `${day}days ${hour} hrs ${min} min ago`;
      }else{
-            // const timedata2=document.getElementById(`${'time'+card.authors[0].profile_name}`)
-            // timedata2.classList.remove('w-32')
-            // timedata2.classList.add('w-60')
+
             return `${year} years ${newday}days ${hour} hrs ${min} min ago`;
      }
 }
@@ -140,12 +153,51 @@ const filterCard=(id)=>{
   
 }
 
-function sortByView(){
+const sortedByView= async()=>{
     const currentlyLoaded=document.getElementById('loaded-id').innerHTML;
+    loadCard(currentlyLoaded,true);
+    // const res=await fetch(`https://openapi.programming-hero.com/api/videos/category/${currentlyLoaded}`);
+    // const data= await res.json();
+    // const cards=data.data;
+    // const cardContainer=document.getElementById('card-container');
+    // cardContainer.innerHTML=``;
+    // cards.sort((a, b) => {
+    //     let fa = a.others.views,
+    //         fb = b.others.views;
+           
+    //         let aa=parseFloat(fa.substring(-1,fa.length-1)),
+    //             bb=parseFloat(fb.substring(-1,fb.length-1));
+    //             console.log(aa,bb)
+    //     if (aa < bb) {
+    //         return -1;
+    //     }
+    //     if (aa > bb) {
+    //         return 1;
+    //     }
+    //     return 0;
+    // });
+
+
+
+   
+    // cards.forEach(card=>{
+    //     viewc=card.others.views;
+    //     viewc=viewc.substring(-1,viewc.length-1);
+    //     const sortedObject = Object.entries(card.others.views).sort((x, y) => x[1] - y[1]);
+    //     console.log(sortedObject);
+    //     // newarray.push(viewc);
+    // })
+    // newarray.sort(function(a, b){return b - a});
     
+    // newarray.forEach(item=>{
+        
+    // })
+
+    
+    // console.log(sortedObject);
+
+   
 }
-
-
 
 loadCategory();
 loadCard(1000)

@@ -12,8 +12,9 @@ const displayCategory = (categories) => {
     categories.forEach(category => {
         const categoryButton = document.createElement('div');
         categoryButton.classList = `bg-[rgba(37, 37, 37, 0.2)] text-gray-900`;
+        categoryButton.classList.remove='bg-red-300';
         categoryButton.innerHTML = `
-        <button class="btn" onclick="filterCard(${category.category_id})">${category.category}</button>
+        <button id="catbtn${category.category_id}" class="btn hover:bg-red-100" onclick="filterCard(${category.category_id})">${category.category}</button>
        `;
         categoryContainer.appendChild(categoryButton);
 
@@ -78,7 +79,7 @@ const displayCard = (cards, isSorted) => {
             const isVerified = card.authors[0].verified;
             const cardBody = document.createElement('div');
             cardBody.innerHTML = `
-        <div   class="card w-72 md:w-auto  h-80 bg-base-100 shadow-xl">
+        <div   class="card w-72 md:w-auto mb-5  h-80 bg-base-100 shadow-xl">
         <figure><img src="${card.thumbnail}" alt="" class="h-52 w-72  rounded-b-md" /></figure>
         <div id="${'time' + card.authors[0].profile_name}" class="text-white w-32 mt-[-35px] ml-[150px] text-right bg-black rounded-md hidden">${xtime}</div>
         <div class="card-body flex flex-row lg:w-80 md:w-64">
@@ -148,6 +149,18 @@ const time = (second) => {
 
 const filterCard = (id) => {
     loadCard(id);
+    const allbtn=document.querySelectorAll(".bg-red-300").forEach((el) => {
+        el.classList.remove('bg-red-300');
+    });
+    console.log(id);
+    try{
+    const btn=document.getElementById(`catbtn${id}`);
+    btn.classList.add('bg-red-300');
+    }
+    catch{
+
+    }
+   
 
 }
 
@@ -158,4 +171,4 @@ const sortedByView = async () => {
 }
 
 loadCategory();
-loadCard(1000)
+filterCard(1000)
